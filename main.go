@@ -37,14 +37,14 @@ func parse(s, t []string) bool {
 
 		if s[i][0] == 0x2B {
 			if strings.Contains(t[i], s[i][1:len(s[i])]) {
-				return true
+				continue
 			}
 			return false
 		}
 
 		if s[i][len(s[i])-1] == 0x2B {
 			if strings.Contains(t[i], s[i][0:len(s[i])-1]) {
-				return true
+				continue
 			}
 			return false
 		}

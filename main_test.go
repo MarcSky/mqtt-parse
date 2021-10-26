@@ -14,6 +14,11 @@ func TestReal(t *testing.T) {
 
 	var tests = []test{
 		{
+			"tp/binance/trading/leaf2/+leaf1/leaf2/#",
+			"tp/binance/trading/leaf2/AAlleaf1/leaf3/leaf4",
+			false,
+		},
+		{
 			"tp/binance/trading/lea#f2/+leaf1/leaf3/leaf4/leaf5+/+/leaf7/leaf8",
 			"tp/binance/trading/leaf2/AAleaf1/leaf3/leaf4/leaf5BB/leaf6/leaf7/CCC/DDD",
 			false,
