@@ -23,6 +23,9 @@ func TestReal(t *testing.T) {
 			"leaf2/+/leaf3/#", "leaf2/hidden/leaf3/leaf4/leaf5", true,
 		},
 		{
+			"leaf2/+/leaf3/#/leaf4", "leaf2/hidden/leaf3/leaf4/leaf5", false,
+		},
+		{
 			"leaf2/leaf5/#", "leaf2/leaf5", false,
 		},
 		{

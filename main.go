@@ -24,7 +24,9 @@ func parse(subscribe, topic string) bool {
 			return false
 		}
 
-		if s[i] == "#" {
+		if s[i] == "#" && i < len(s) - 1 {
+			return false
+		} else if s[i] == "#" {
 			return true
 		}
 
@@ -55,9 +57,10 @@ func parse(subscribe, topic string) bool {
 }
 
 func main() {
-	subscribe := flag.String("subscribe", "", "subscribe")
-	topic := flag.String("topic", "", "subscribe")
+	var subscribe, topic string
+	flag.StringVar(&subscribe, "s", "", "subscribe")
+	flag.StringVar(&topic, "t", "", "topic")
 	flag.Parse()
 
-	fmt.Println("result", parse(*subscribe, *topic))
+	fmt.Println(parse(subscribe, topic))
 }
