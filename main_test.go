@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestReal(t *testing.T) {
 	type test struct {
@@ -10,6 +13,16 @@ func TestReal(t *testing.T) {
 	}
 
 	var tests = []test{
+		{
+			"tp/binance/trading/lea#f2/+leaf1/leaf3/leaf4/leaf5+/+/leaf7/leaf8",
+			"tp/binance/trading/leaf2/AAleaf1/leaf3/leaf4/leaf5BB/leaf6/leaf7/CCC/DDD",
+			false,
+		},
+		{
+			"tp/binance/trading/leaf2/+leaf1/leaf3/leaf4/leaf5+/+/leaf7/CCC/DDD",
+			"tp/binance/trading/leaf2/AAleaf1/leaf3/leaf4/leaf5BB/leaf6/leaf7/CCC/DDD",
+			true,
+		},
 		{
 			"leaf2/leaf1/leaf3/leaf4/leaf5/+/leaf7/#", "leaf7", false,
 		},
@@ -52,7 +65,7 @@ func TestReal(t *testing.T) {
 	}
 
 	for i := range tests {
-		r := parse(tests[i].subscribe, tests[i].topic)
+		r := parse(strings.Split(tests[i].subscribe, "/"), strings.Split(tests[i].topic, "/"))
 		if r != tests[i].result {
 			t.Errorf("problem with test %d. We expected %v but got %v", i, tests[i].result, r)
 		}

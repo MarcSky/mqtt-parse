@@ -6,42 +6,43 @@ import (
 	"strings"
 )
 
-func parse(subscribe, topic string) bool {
-	s := strings.Split(subscribe, "/")
-	t := strings.Split(topic, "/")
-	if len(s) == 0 || len(t) == 0 {
-		return false
-	}
+const (
+	del1 = "#"
+	plus = "+"
+)
 
-	if len(s) < len(t) && s[len(s)-1] != "#" {
+func parse(s, t []string) bool {
+	var lenS, lenT = len(s) ,len(t)
+	if lenS < lenT && s[lenS-1] != del1 {
 		return false
-	} else if len(s) > len(t) {
+	} else if lenS > lenT {
 		return false
 	}
 
 	for i := range s {
-		if s[i] == "" || t[i] == "" {
+		if len(s[i]) == 0 || len(t[i]) == 0 {
 			return false
 		}
 
-		if s[i] == "#" && i < len(s) - 1 {
-			return false
-		} else if s[i] == "#" {
+		if s[i] == del1 {
+			if i < lenS-1 {
+				return false
+			}
 			return true
 		}
 
-		if s[i] == "+" {
+		if s[i] == plus {
 			continue
 		}
 
-		if strings.HasPrefix(s[i], "+") {
+		if s[i][0] == 0x2B {
 			if strings.Contains(t[i], s[i][1:len(s[i])]) {
 				return true
 			}
 			return false
 		}
 
-		if strings.HasSuffix(s[i], "+") {
+		if s[i][len(s[i])-1] == 0x2B {
 			if strings.Contains(t[i], s[i][0:len(s[i])-1]) {
 				return true
 			}
@@ -62,5 +63,7 @@ func main() {
 	flag.StringVar(&topic, "t", "", "topic")
 	flag.Parse()
 
-	fmt.Println(parse(subscribe, topic))
+	s := strings.Split(subscribe, "/")
+	t := strings.Split(topic, "/")
+	fmt.Println(parse(s, t))
 }
